@@ -646,32 +646,60 @@
     gap: 20px;
   }
 
-  .honest-card {
-    background: var(--white);
+  .honest-drop {
     border-radius: var(--radius);
-    padding: 28px 28px;
+    overflow: hidden;
     box-shadow: var(--shadow);
+    background: var(--white);
   }
 
-  .honest-card h3 {
+  .honest-drop-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
     font-family: Arial, sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    text-align: left;
+    transition: background var(--transition);
   }
+
+  .honest-drop-header:hover { background: var(--beige-ultra); }
+  .honest-drop.open .honest-drop-header { background: var(--beige-ultra); }
 
   .tag-no { color: #C0392B; }
-  .tag-yes { color: var(--beige); }
+  .tag-yes { color: #8B6030; }
 
-  .honest-card ul {
-    list-style: none;
+  .honest-drop-header span:nth-child(2) { flex: 1; }
+
+  .honest-drop-arrow {
+    transition: transform var(--transition);
+    display: flex;
+    align-items: center;
   }
 
-  .honest-card ul li {
-    padding: 7px 0;
+  .honest-drop.open .honest-drop-arrow { transform: rotate(180deg); }
+
+  .honest-drop-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .honest-drop.open .honest-drop-body { max-height: 300px; }
+
+  .honest-drop-body ul {
+    list-style: none;
+    padding: 0 24px 24px;
+  }
+
+  .honest-drop-body ul li {
+    padding: 9px 0;
     font-size: 0.93rem;
     color: var(--dark);
     border-bottom: 1px solid var(--beige-ultra);
@@ -681,7 +709,7 @@
     line-height: 1.5;
   }
 
-  .honest-card ul li:last-child { border-bottom: none; }
+  .honest-drop-body ul li:last-child { border-bottom: none; }
 
   .li-icon { flex-shrink: 0; margin-top: 3px; }
 
@@ -1239,46 +1267,65 @@
     <span class="section-label reveal">Честно</span>
     <h2 class="section-title reveal">Этот вариант не для всех</h2>
     <div class="honest-grid">
-      <div class="honest-card reveal">
-        <h3 class="tag-no">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          Вряд ли подойдёт, если вы:
-        </h3>
-        <ul>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Ищете быстрые деньги без действий
-          </li>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Не любите работать с людьми
-          </li>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Хотите полностью пассивный доход сразу
-          </li>
-        </ul>
+
+      <!-- Карточка 1 — выпадающая -->
+      <div class="honest-drop reveal" id="drop-no">
+        <button class="honest-drop-header tag-no" onclick="toggleDrop('drop-no')">
+          <span class="honest-drop-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          </span>
+          <span>Вряд ли подойдёт, если вы:</span>
+          <span class="honest-drop-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="honest-drop-body">
+          <ul>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Ищете быстрые деньги без действий
+            </li>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Не любите работать с людьми
+            </li>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Хотите полностью пассивный доход сразу
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="honest-card reveal reveal-delay-1">
-        <h3 class="tag-yes">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-          Подойдёт, если вам близко:
-        </h3>
-        <ul>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--beige)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Идея спокойного системного дохода
-          </li>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--beige)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Построить без серьёзных рисков постепенно
-          </li>
-          <li>
-            <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--beige)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Финансовая устойчивость на 10–15 лет вперёд
-          </li>
-        </ul>
+
+      <!-- Карточка 2 — выпадающая -->
+      <div class="honest-drop reveal reveal-delay-1" id="drop-yes">
+        <button class="honest-drop-header tag-yes" onclick="toggleDrop('drop-yes')">
+          <span class="honest-drop-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <span>Подойдёт, если вам близко:</span>
+          <span class="honest-drop-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="honest-drop-body">
+          <ul>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B6030" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Идея спокойного системного дохода
+            </li>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B6030" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Построить без серьёзных рисков постепенно
+            </li>
+            <li>
+              <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B6030" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Финансовая устойчивость на 10–15 лет вперёд
+            </li>
+          </ul>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1357,6 +1404,16 @@
 </footer>
 
 <script>
+  // Honest dropdowns
+  function toggleDrop(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  // Auto-open both honest dropdowns
+  document.getElementById('drop-no').classList.add('open');
+  document.getElementById('drop-yes').classList.add('open');
+
   // Accordion
   function toggleAcc(btn) {
     const item = btn.closest('.acc-item');
